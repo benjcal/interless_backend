@@ -10,7 +10,7 @@ let x = dailyJson.forEach(e => {
     delete e.version_id
     delete e.season
 
-    if (!accumulator[e.program_code]) {
+    if ((!accumulator[e.program_code]) & (e.program_code[0] !== '!')) {
         accumulator[e.program_code] = e
         accumulator[e.program_code].channel = [accumulator[e.program_code].channel]
 
@@ -26,14 +26,13 @@ let x = dailyJson.forEach(e => {
         accumulator[e.program_code].channel.push(e.channel)
     }
 
-    delete e.program_code
+    // delete e.program_code
 })
 
-let arr = []
-Object.keys(accumulator).forEach(e => {
-    arr.push(accumulator[e])
-})
+/* helper function to make an array ouf of the accumulator */
+// let arr = Object.keys(accumulator).map(e => accumulator[e])
+let arr = Object.keys(accumulator).map(e => accumulator[e].program_code)
+arr.sort()
 
-console.log(arr)
-// fs.writeFileSync('intelessData.json', JSON.stringify(accumulator, null, 2), 'utf8')
+fs.writeFileSync('interlessData.json', JSON.stringify(accumulator, null, 2), 'utf8')
 // console.log(JSON.stringify(accumulator, null, 2))
